@@ -15,7 +15,7 @@ test('limits requests and includes standard headers plus Retry-After', async () 
 });
 test('supports skip and custom keys', async () => {
   const app = express(); app.use(rateLimit({ max: 1, keyGenerator: (req) => req.get('x-client') || 'default', skip: (req) => req.path === '/health' }));
-  app.get('*path', (_req, res) => res.send('ok'));
+  app.use((_req, res) => res.send('ok'));
   assert.equal((await request(app).get('/health')).status, 200);
   assert.equal((await request(app).get('/a').set('x-client', 'a')).status, 200);
   assert.equal((await request(app).get('/b').set('x-client', 'b')).status, 200);

@@ -16,7 +16,7 @@ test('emits a structured finish record without query parameters', async () => {
 test('supports skip and contains logger failures', async () => {
   let calls = 0; const app = express();
   app.use(requestLogger({ logger: () => { calls += 1; throw new Error('logger failed'); }, skip: (req) => req.path === '/skip' }));
-  app.get('*path', (_req, res) => res.send('ok'));
+  app.use((_req, res) => res.send('ok'));
   await request(app).get('/skip'); await request(app).get('/logged');
   assert.equal(calls, 1);
 });
