@@ -1,0 +1,9 @@
+test/
+examples/
+.github/
+.env
+.env.*
+!.env.example
+.gitignore
+.npmignore
+eslint.config.js

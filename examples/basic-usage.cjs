@@ -1,0 +1,11 @@
+'use strict';
+const express = require('express');
+const { requestId, requestLogger, rateLimit } = require('expressguard-toolkit');
+const app = express();
+app.use(express.json());
+app.use(requestId());
+app.use(requestLogger());
+app.use(rateLimit({ windowMs: 60_000, max: 100 }));
+app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+module.exports = app;
+if (require.main === module) app.listen(3000, () => console.log('Basic example listening on http://localhost:3000'));
